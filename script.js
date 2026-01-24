@@ -268,3 +268,35 @@ function throttle(func, limit) {
   function openMarket() {
     window.open("https://your-website-link.com", "_blank"); 
   }
+
+  document.getElementById("contactForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const formData = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        subject: document.getElementById("subject").value,
+        message: document.getElementById("message").value
+    };
+
+    try {
+        const response = await fetch("https://my-portfolio-backend-bnco.onrender.com/send", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formData)
+        });
+
+        if (response.ok) {
+            alert("Message sent successfully!");
+            this.reset();
+        } else {
+            alert("Failed to send message");
+        }
+    } catch (error) {
+        console.error(error);
+        alert("Server error");
+    }
+});
+
